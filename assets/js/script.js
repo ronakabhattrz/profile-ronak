@@ -172,7 +172,6 @@ async function fetchMediumPosts() {
           postsContainer.innerHTML = ''; // Clear previous content
 
           data.items.forEach(item => {
-              console.log(item)
               const postElement = document.createElement('li');
               postElement.classList.add('blog-post-item');
               const thumbnail = item.thumbnail ? item.thumbnail : './assets/images/medium.jpeg';
