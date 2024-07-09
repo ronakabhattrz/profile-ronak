@@ -61,7 +61,7 @@ const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
+// select.addEventListener("click", function () { elementToggleFunc(this); });
 
 // add event in all select items
 for (let i = 0; i < selectItems.length; i++) {
@@ -157,3 +157,51 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+const mediumFeedUrl = 'https://medium.com/feed/@ronakabhattrz';
+
+// Function to fetch and display Medium blog posts
+async function fetchMediumPosts() {
+  try {
+      const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(mediumFeedUrl)}`);
+      const data = await response.json();
+
+      if (data && data.items) {
+          const postsContainer = document.getElementById('medium-posts-list');
+          postsContainer.innerHTML = ''; // Clear previous content
+
+          data.items.forEach(item => {
+              console.log(item)
+              const postElement = document.createElement('li');
+              postElement.classList.add('blog-post-item');
+              const thumbnail = item.thumbnail ? item.thumbnail : './assets/images/medium.jpeg';
+              postElement.innerHTML = `
+                  <a href="${item.link}" target="_blank">
+
+                      <figure class="blog-banner-box">
+                          <img src="${thumbnail}" alt="${item.title}" loading="lazy">
+                      </figure>
+
+                      <div class="blog-content">
+                          <div class="blog-meta">
+                              <p class="blog-category">Design</p>
+                              <span class="dot"></span>
+                              <time datetime="${item.pubDate}">${new Date(item.pubDate).toDateString()}</time>
+                          </div>
+                          <h3 class="h3 blog-item-title">${item.title}</h3>
+                      </div>
+                  </a>
+              `;
+              postsContainer.appendChild(postElement);
+          });
+      } else {
+          console.error('Error fetching Medium posts:', data);
+      }
+  } catch (error) {
+      console.error('Error fetching Medium posts:', error);
+  }
+}
+
+// Call the function to fetch and display Medium posts
+fetchMediumPosts();
