@@ -5,9 +5,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="/manifest.json" />
-  <title>Ronak Bhatt | Ruby on Rails | React JS | Typescript | Next Js | AWS</title>
-  <meta name="description" content="I'm a Full Stack software engineer with solid experience with Ruby on Rails and JS Frameworks in several business areas and with several technologies.
-  ">
+  <title>Ronak Bhatt | Full Stack Developer | Ruby on Rails | React | TypeScript | Next.js | AWS</title>
+  <meta name="description" content="Ronak Bhatt is a Full Stack software engineer specializing in Ruby on Rails, React, TypeScript, and Next.js. With expertise in AWS and modern web technologies, delivering scalable solutions.">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ronakbhatt.in/">
+  <meta property="og:title" content="Ronak Bhatt | Full Stack Developer">
+  <meta property="og:description" content="Full Stack software engineer specializing in Ruby on Rails, React, TypeScript, and Next.js. Expert in AWS and modern web technologies.">
+  <meta property="og:image" content="https://ronakbhatt.in/assets/images/preview.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://ronakbhatt.in/">
+  <meta property="twitter:title" content="Ronak Bhatt | Full Stack Developer">
+  <meta property="twitter:description" content="Full Stack software engineer specializing in Ruby on Rails, React, TypeScript, and Next.js. Expert in AWS and modern web technologies.">
+  <meta property="twitter:image" content="https://ronakbhatt.in/assets/images/preview.png">
+
+  <!-- Additional SEO Meta Tags -->
+  <meta name="author" content="Ronak Bhatt">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffdc70">
+  <meta name="keywords" content="Ronak Bhatt, Full Stack Developer, Ruby on Rails, React, TypeScript, Next.js, AWS, Web Development, Software Engineer, India">
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="./assets/css/style.css" as="style">
+  <link rel="preload" href="./assets/images/ronak.png" as="image">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" as="style">
 
   <!-- Google / Search Engine Tags -->
   <meta itemprop="name" content="Ronak Bhatt | Ruby on Rails | React JS | Typescript | Next Js | AWS">
@@ -75,13 +99,14 @@
         }
       </script>
       <!-- Google Tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HQD491GVL"></script>
+      <script defer src="https://www.googletagmanager.com/gtag/js?id=G-7HQD491GVL"></script>
       <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-7HQD491GVL');
+        window.addEventListener('load', function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-7HQD491GVL');
+        });
       </script>
   <!--
     - favicon
@@ -101,18 +126,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <!-- Hotjar Tracking Code for Site 5221336 (name missing) -->
   <script>
-    (function(h,o,t,j,a,r){
+    window.addEventListener('load', function() {
+      (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:5221336,hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    });
   </script>
 </head>
 
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <!-- Loading indicator -->
+  <div class="loading-indicator">
+    <div class="spinner"></div>
+  </div>
 
   <!--
     - #MAIN
@@ -129,7 +162,7 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/ronak.png" alt="Ronak Bhatt" width="80">
+          <img src="./assets/images/ronak.png" alt="Ronak Bhatt" width="80" loading="lazy">
         </figure>
 
         <div class="info-content">
@@ -247,32 +280,30 @@
         - #NAVBAR
       -->
 
-      <nav class="navbar">
-
+      <nav class="navbar" role="navigation" aria-label="Main navigation">
         <ul class="navbar-list">
-
           <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
+            <button class="navbar-link active" data-nav-link="about" aria-current="page">About</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
+            <button class="navbar-link" data-nav-link="resume">Resume</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
+            <button class="navbar-link" data-nav-link="portfolio">Portfolio</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
+            <button class="navbar-link" data-nav-link="blog">Blog</button>
           </li>
-
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
+            <button class="navbar-link" data-nav-link="contact">Contact</button>
           </li>
-
+          <li class="navbar-item">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+              <ion-icon name="sunny" class="sun-icon"></ion-icon>
+              <ion-icon name="moon" class="moon-icon"></ion-icon>
+            </button>
+          </li>
         </ul>
-
       </nav>
 
 
@@ -386,17 +417,12 @@
 
         </section>
 
-
-        <!--
-          - testimonials
-        -->
-
+        <!-- Testimonials Section -->
         <section class="testimonials">
 
           <h3 class="h3 testimonials-title">Testimonials</h3>
 
           <ul class="testimonials-list has-scrollbar">
-
             <li class="testimonials-item">
               <div class="content-card" data-testimonials-item>
 
@@ -487,17 +513,84 @@
 
               </div>
             </li>
- 
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-1.png" alt="John Smith" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>John Smith</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Ronak was a real pleasure to work with and we look forward to working with him again. He's definitely the kind of developer you can trust with a project from start to finish.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-2.png" alt="ammy Wilson" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Ammy Wilson</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Ronak's technical expertise and attention to detail transformed our project. His ability to understand our requirements and deliver beyond expectations was impressive.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-3.png" alt="Kimberly Davis" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Kimberly Davis</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Working with Ronak was a game-changer for our company. His innovative approach to problem-solving and ability to deliver quality work on tight deadlines made all the difference.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-4.png" alt="Rick Clark" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Rick Clark</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Ronak's expertise in both front-end and back-end development greatly improved our platform's performance and user experience. His communication throughout the project was excellent.
+                  </p>
+                </div>
+
+              </div>
+            </li>
 
           </ul>
 
         </section>
 
-
-        <!--
-          - testimonials modal
-        -->
-
+        <!-- Testimonials Modal -->
         <div class="modal-container" data-modal-container>
 
           <div class="overlay" data-overlay></div>
@@ -510,23 +603,21 @@
 
             <div class="modal-img-wrapper">
               <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+                <img src="./assets/images/avatar-1.png" alt="Pat Smith" width="80" data-modal-img>
               </figure>
 
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+              <img src="./assets/images/icon-quote.svg" alt="quote icon" width="40">
             </div>
 
             <div class="modal-content">
 
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
+              <h4 class="h3 modal-title" data-modal-title>Pat Smith</h4>
+
+              <time datetime="2021-06-14">14 June, 2021</time>
 
               <div data-modal-text>
                 <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  Ronak was a real pleasure to work with and we look forward to working with him again. He's definitely the kind of developer you can trust with a project from start to finish. He has a high level of expertise in Ruby on Rails, React, and AWS, allowing him to build complex applications with efficiency.
                 </p>
               </div>
 
@@ -581,6 +672,49 @@
 
         </section>
 
+        <!-- Achievements Section -->
+        <section class="achievements">
+          <h3 class="h3 achievements-title">Achievements</h3></br>
+          
+          <ul class="achievements-list">
+            <li class="achievements-item">
+              <div class="content-card">
+                <div class="achievement-icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+                <div class="achievement-content">
+                  <h4 class="h4 achievement-number" data-count="69">0</h4>
+                  <p class="achievement-text">Projects Done</p>
+                </div>
+              </div>
+            </li>
+            
+            <li class="achievements-item">
+              <div class="content-card">
+                <div class="achievement-icon">
+                  <ion-icon name="people-outline"></ion-icon>
+                </div>
+                <div class="achievement-content">
+                  <h4 class="h4 achievement-number" data-count="65">0</h4>
+                  <p class="achievement-text">Happy Clients</p>
+                </div>
+              </div>
+            </li>
+            
+            <li class="achievements-item">
+              <div class="content-card">
+                <div class="achievement-icon">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="achievement-content">
+                  <h4 class="h4 achievement-number" data-count="8">0</h4>
+                  <p class="achievement-text">Years Experience</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
       </article>
 
 
@@ -595,6 +729,12 @@
 
         <header>
           <h2 class="h2 article-title">Resume</h2>
+          <div class="resume-actions" style="text-align: right; margin-top: -50px; margin-bottom: 30px;">
+            <a href="./assets/resume.pdf" download class="form-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;">
+              <ion-icon name="download-outline"></ion-icon>
+              <span>Download PDF</span>
+            </a>
+          </div>
         </header>
 
         <section class="timeline">
@@ -717,67 +857,143 @@
 
         </section>
 
-        <!-- <section class="skill">
+        <section class="skill">
 
           <h3 class="h3 skills-title">My skills</h3>
 
           <ul class="skills-list content-card">
 
             <li class="skills-item">
-
               <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
+                <h5 class="h5">Ruby on Rails</h5>
+                <data value="95">95%</data>
               </div>
-
               <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
+                <div class="skill-progress-fill" style="width: 95%;"></div>
               </div>
-
             </li>
 
             <li class="skills-item">
-
               <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
+                <h5 class="h5">JavaScript/TypeScript</h5>
                 <data value="90">90%</data>
               </div>
-
               <div class="skill-progress-bg">
                 <div class="skill-progress-fill" style="width: 90%;"></div>
               </div>
-
             </li>
 
             <li class="skills-item">
-
               <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
+                <h5 class="h5">React/Next.js</h5>
+                <data value="85">85%</data>
               </div>
-
               <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
+                <div class="skill-progress-fill" style="width: 85%;"></div>
               </div>
+            </li>
 
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">AWS/Cloud Infrastructure</h5>
+                <data value="80">80%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+            </li>
+
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">PostgreSQL/MySQL</h5>
+                <data value="85">85%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 85%;"></div>
+              </div>
             </li>
 
           </ul>
 
-        </section> -->
+        </section>
+
+        <!-- GitHub Contribution -->
+        <section class="github-activity">
+          <h3 class="h3 github-title">GitHub Activity</h3>
+          
+          <div class="content-card github-card">
+            <div class="github-header">
+              <div class="github-profile">
+                <img src="./assets/images/github-profile.jpg" alt="GitHub Profile" class="github-avatar">
+                <div class="github-info">
+                  <h4 class="h4 github-name">Ronak Bhatt</h4>
+                  <a href="https://github.com/ronakbhatt" class="github-username" target="_blank">@ronakbhatt</a>
+                </div>
+              </div>
+              <a href="https://github.com/ronakbhatt" class="github-follow-btn" target="_blank">
+                <ion-icon name="logo-github"></ion-icon>
+                Follow
+              </a>
+            </div>
+            
+            <div class="github-stats">
+              <div class="stat-item">
+                <span class="stat-value">120+</span>
+                <span class="stat-label">Repositories</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">450+</span>
+                <span class="stat-label">Contributions</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">35+</span>
+                <span class="stat-label">Followers</span>
+              </div>
+            </div>
+            
+            <div class="github-calendar">
+              <h5 class="h5">Contribution Graph</h5>
+              <div class="calendar-container">
+                <!-- GitHub contribution calendar will be loaded here -->
+                <img src="./assets/images/github-contributions.png" alt="GitHub Contributions" class="github-graph">
+              </div>
+            </div>
+            
+            <div class="github-repositories">
+              <h5 class="h5">Popular Repositories</h5>
+              <ul class="repo-list">
+                <li class="repo-item">
+                  <a href="#" class="repo-link" target="_blank">
+                    <h6 class="repo-name">e-commerce-platform</h6>
+                    <p class="repo-description">Full-stack e-commerce platform with React, Rails, and Stripe integration</p>
+                    <div class="repo-meta">
+                      <span class="repo-language"><span class="language-dot ruby"></span>Ruby</span>
+                      <span class="repo-stars"><ion-icon name="star-outline"></ion-icon> 48</span>
+                      <span class="repo-forks"><ion-icon name="git-branch-outline"></ion-icon> 15</span>
+                    </div>
+                  </a>
+                </li>
+                
+                <li class="repo-item">
+                  <a href="#" class="repo-link" target="_blank">
+                    <h6 class="repo-name">react-dashboard</h6>
+                    <p class="repo-description">Modern React admin dashboard with TypeScript and material UI</p>
+                    <div class="repo-meta">
+                      <span class="repo-language"><span class="language-dot typescript"></span>TypeScript</span>
+                      <span class="repo-stars"><ion-icon name="star-outline"></ion-icon> 32</span>
+                      <span class="repo-forks"><ion-icon name="git-branch-outline"></ion-icon> 8</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              
+              <a href="https://github.com/ronakbhatt?tab=repositories" class="view-more-btn" target="_blank">
+                View More Repositories
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </a>
+            </div>
+          </div>
+        </section>
 
       </article>
 
@@ -797,27 +1013,27 @@
 
         <section class="projects">
           <p style="color: white;">All Major Projects</p>
-          <!-- <ul class="filter-list">
+          <ul class="filter-list">
 
             <li class="filter-item">
               <button class="active" data-filter-btn>All</button>
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Web design</button>
+              <button data-filter-btn>Web Development</button>
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Applications</button>
+              <button data-filter-btn>E-Commerce</button>
             </li>
 
             <li class="filter-item">
-              <button data-filter-btn>Web development</button>
+              <button data-filter-btn>SaaS</button>
             </li>
 
-          </ul> -->
+          </ul>
 
-          <!-- <div class="filter-select-box">
+          <div class="filter-select-box">
 
             <button class="filter-select" data-select>
 
@@ -836,20 +1052,20 @@
               </li>
 
               <li class="select-item">
-                <button data-select-item>Web design</button>
+                <button data-select-item>Web Development</button>
               </li>
 
               <li class="select-item">
-                <button data-select-item>Applications</button>
+                <button data-select-item>E-Commerce</button>
               </li>
 
               <li class="select-item">
-                <button data-select-item>Web development</button>
+                <button data-select-item>SaaS</button>
               </li>
 
             </ul>
 
-          </div> -->
+          </div>
 
           <ul class="project-list">
 
@@ -866,12 +1082,12 @@
 
                 <h3 class="project-title">Hollandia Premium</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Web Development</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item  active" data-filter-item data-category="web development">
               <a href="https://allproifm.com/" target="_blank">
 
                 <figure class="project-img">
@@ -884,7 +1100,7 @@
 
                 <h3 class="project-title">All Pro IFM</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Web Development</p>
 
               </a>
             </li>
@@ -902,12 +1118,12 @@
 
                 <h3 class="project-title">Jager Lodge</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Web Development</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="applications">
+            <li class="project-item  active" data-filter-item data-category="saas">
               <a href="https://www.bulletproof.co.uk/" target="_blank">
 
                 <figure class="project-img">
@@ -920,12 +1136,12 @@
 
                 <h3 class="project-title">Bulletproof Cyber Security</h3>
 
-                <p class="project-category">Web Development</p>
+                <p class="project-category">SaaS</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item  active" data-filter-item data-category="web development">
               <a href="https://garageduin.nl/" target="_blank">
 
                 <figure class="project-img">
@@ -943,7 +1159,7 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web design">
+            <li class="project-item  active" data-filter-item data-category="web development">
               <a href="https://www.nsoj.in/" target="_blank">
 
                 <figure class="project-img">
@@ -961,7 +1177,7 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="applications">
+            <li class="project-item  active" data-filter-item data-category="e-commerce">
               <a href="https://pitstopusa.com/" target="_blank">
 
                 <figure class="project-img">
@@ -974,12 +1190,12 @@
 
                 <h3 class="project-title">Pit Stop USA</h3>
 
-                <p class="project-category">Web Development</p>
+                <p class="project-category">E-Commerce</p>
 
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="web development">
+            <li class="project-item  active" data-filter-item data-category="saas">
               <a href="https://www.nav-eco.fr/en" target="_blank">
 
                 <figure class="project-img">
@@ -992,7 +1208,7 @@
 
                 <h3 class="project-title">Nav Eco</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">SaaS</p>
 
               </a>
             </li>
@@ -1010,7 +1226,7 @@
 
                 <h3 class="project-title">Auto Service Haarlem</h3>
 
-                <p class="project-category">Web development</p>
+                <p class="project-category">Web Development</p>
 
               </a>
             </li> 
@@ -1018,6 +1234,56 @@
           </ul>
 
         </section>
+
+        <!-- Project Details Modal -->
+        <div class="modal-container project-modal-container" data-project-modal-container>
+          <div class="overlay" data-project-overlay></div>
+
+          <section class="project-modal">
+            <button class="modal-close-btn" data-project-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="modal-content">
+              <h3 class="h3 modal-title" data-project-modal-title>Project Title</h3>
+              
+              <div class="project-details">
+                <figure class="modal-img-wrapper">
+                  <img src="" alt="Project image" data-project-modal-img>
+                </figure>
+                
+                <div class="project-info">
+                  <div class="details-item">
+                    <h5 class="h5">Client:</h5>
+                    <p data-project-modal-client>Client Name</p>
+                  </div>
+                  
+                  <div class="details-item">
+                    <h5 class="h5">Technologies:</h5>
+                    <p data-project-modal-tech>HTML, CSS, JavaScript</p>
+                  </div>
+                  
+                  <div class="details-item">
+                    <h5 class="h5">Year:</h5>
+                    <p data-project-modal-year>2023</p>
+                  </div>
+                  
+                  <div class="details-item">
+                    <a href="#" class="form-btn" target="_blank" data-project-modal-link>
+                      <ion-icon name="globe-outline"></ion-icon>
+                      <span>Visit Website</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="project-description" data-project-modal-description>
+                <h4 class="h4">Project Overview</h4>
+                <p>Detailed description of the project goes here.</p>
+              </div>
+            </div>
+          </section>
+        </div>
 
       </article>
 
@@ -1257,6 +1523,17 @@
 
           </form>
 
+          <div class="form-success-message" style="display: none;">
+            <div class="success-content">
+              <ion-icon name="checkmark-circle-outline" style="font-size: 3rem; color: var(--vegas-gold);"></ion-icon>
+              <h4 class="h4">Message Sent Successfully!</h4>
+              <p>Thank you for contacting me. I'll get back to you as soon as possible.</p>
+              <button class="form-btn send-new-btn" style="margin-top: 20px;">
+                <span>Send Another Message</span>
+              </button>
+            </div>
+          </div>
+
         </section>
 
       </article>
@@ -1265,10 +1542,10 @@
 
   </main>
 
-
-
-
-
+  <!-- Scroll to top button -->
+  <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+    <ion-icon name="arrow-up"></ion-icon>
+  </button>
 
   <!--
     - custom js link

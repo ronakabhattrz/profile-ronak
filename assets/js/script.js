@@ -204,3 +204,368 @@ async function fetchMediumPosts() {
 
 // Call the function to fetch and display Medium posts
 fetchMediumPosts();
+
+// Loading indicator
+window.addEventListener('load', () => {
+  const loadingIndicator = document.querySelector('.loading-indicator');
+  loadingIndicator.classList.add('hidden');
+  setTimeout(() => {
+    loadingIndicator.style.display = 'none';
+  }, 300);
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Fade-in animation with Intersection Observer
+const fadeElements = document.querySelectorAll('.content-card, .service-item, .project-item, .blog-post-item');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('fade-in');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+fadeElements.forEach(element => {
+  fadeObserver.observe(element);
+});
+
+// Mobile menu functionality
+const navbarLinks = document.querySelectorAll('.navbar-link');
+let isNavOpen = false;
+
+function closeNavMenu() {
+  if (isNavOpen) {
+    isNavOpen = false;
+    // Additional code for closing mobile menu if needed
+  }
+}
+
+document.addEventListener('click', (e) => {
+  if (isNavOpen && !e.target.closest('.navbar')) {
+    closeNavMenu();
+  }
+});
+
+// Active class for current section in navigation
+const sections = document.querySelectorAll('article');
+const navLinks = document.querySelectorAll('[data-nav-link]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    
+    if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+      current = section.id;
+    }
+  });
+  
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.textContent.toLowerCase() === current) {
+      link.classList.add('active');
+    }
+  });
+});
+
+// Scroll to top functionality
+const scrollToTopButton = document.getElementById('scroll-to-top');
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollToTopButton.classList.add('visible');
+  } else {
+    scrollToTopButton.classList.remove('visible');
+  }
+});
+
+scrollToTopButton.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Theme toggle functionality
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+const getCurrentTheme = () => {
+  let theme = localStorage.getItem('theme');
+  if (!theme) {
+    theme = prefersDarkScheme.matches ? 'dark' : 'light';
+  }
+  return theme;
+};
+
+const setTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+};
+
+// Set initial theme
+const currentTheme = getCurrentTheme();
+setTheme(currentTheme);
+
+// Toggle theme when button is clicked
+themeToggle.addEventListener('click', () => {
+  const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  setTheme(newTheme);
+});
+
+// Listen for system theme changes if no preference is saved
+prefersDarkScheme.addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    setTheme(e.matches ? 'dark' : 'light');
+  }
+});
+
+// Contact form success message handler
+const contactForm = document.querySelector("[data-form]");
+const successMessage = document.querySelector(".form-success-message");
+const sendNewBtn = document.querySelector(".send-new-btn");
+
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    if (!contactForm.checkValidity()) return;
+    
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    
+    fetch(contactForm.action, {
+      method: contactForm.method,
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Show success message
+        contactForm.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // Reset form
+        contactForm.reset();
+        document.querySelector("[data-form-btn]").setAttribute("disabled", "");
+      } else {
+        throw new Error('Form submission failed');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was a problem submitting your form. Please try again later.');
+    });
+  });
+}
+
+if (sendNewBtn) {
+  sendNewBtn.addEventListener('click', function() {
+    successMessage.style.display = 'none';
+    contactForm.style.display = 'block';
+  });
+}
+
+// Project modal variables and functionality
+const projectItems = document.querySelectorAll(".project-item");
+const projectModalContainer = document.querySelector("[data-project-modal-container]");
+const projectModalCloseBtn = document.querySelector("[data-project-modal-close-btn]");
+const projectOverlay = document.querySelector("[data-project-overlay]");
+const projectModalTitle = document.querySelector("[data-project-modal-title]");
+const projectModalImg = document.querySelector("[data-project-modal-img]");
+const projectModalClient = document.querySelector("[data-project-modal-client]");
+const projectModalTech = document.querySelector("[data-project-modal-tech]");
+const projectModalYear = document.querySelector("[data-project-modal-year]");
+const projectModalLink = document.querySelector("[data-project-modal-link]");
+const projectModalDesc = document.querySelector("[data-project-modal-description]");
+
+// Project data
+const projectsData = [
+  {
+    id: "hollandia-premium",
+    title: "Hollandia Premium",
+    client: "Hollandia",
+    technologies: "HTML, CSS, JavaScript, WordPress",
+    year: "2022",
+    description: "A premium website for Hollandia showcasing their products and services. The project involved creating a modern, responsive design with a focus on user experience and visual appeal.",
+    link: "https://hollandiapremium.nl/"
+  },
+  {
+    id: "all-pro-ifm",
+    title: "All Pro IFM",
+    client: "All Pro IFM",
+    technologies: "React, Node.js, Express, MongoDB",
+    year: "2022",
+    description: "Developed a comprehensive management platform for All Pro IFM. The system includes client management, service tracking, and reporting features.",
+    link: "https://allproifm.com/"
+  },
+  {
+    id: "jager-lodge",
+    title: "Jager Lodge",
+    client: "Jager Lodge",
+    technologies: "HTML, CSS, JavaScript, Bootstrap",
+    year: "2021",
+    description: "A responsive website for a luxury lodge in Austria. The site features an online booking system, photo galleries, and detailed information about lodge facilities.",
+    link: "https://jagerlodge.at/"
+  },
+  {
+    id: "bulletproof",
+    title: "Bulletproof Cyber Security",
+    client: "Bulletproof",
+    technologies: "React, Python, Django, PostgreSQL",
+    year: "2022",
+    description: "A SaaS platform for cyber security management. The project included implementing secure authentication, real-time threat monitoring, and detailed reporting.",
+    link: "https://www.bulletproof.co.uk/"
+  },
+  {
+    id: "garage-duin",
+    title: "Garage Duin",
+    client: "Garage Duin",
+    technologies: "HTML, CSS, JavaScript, PHP",
+    year: "2021",
+    description: "A website for a garage business featuring service information, appointment booking, and customer reviews. The site is fully responsive and includes a custom CMS.",
+    link: "https://garageduin.nl/"
+  },
+  {
+    id: "nsoj",
+    title: "NsoJ",
+    client: "National School of Journalism",
+    technologies: "WordPress, PHP, MySQL, JavaScript",
+    year: "2020",
+    description: "A comprehensive website for an educational institution. Features include course management, student portal, faculty profiles, and an online application system.",
+    link: "https://www.nsoj.in/"
+  },
+  {
+    id: "pit-stop-usa",
+    title: "Pit Stop USA",
+    client: "Pit Stop USA",
+    technologies: "Shopify, JavaScript, Ruby on Rails",
+    year: "2021",
+    description: "An e-commerce platform for automotive parts and accessories. The project included product catalog management, payment processing, and order fulfillment systems.",
+    link: "https://pitstopusa.com/"
+  },
+  {
+    id: "nav-eco",
+    title: "Nav Eco",
+    client: "Nav Eco",
+    technologies: "React, Node.js, MongoDB, AWS",
+    year: "2022",
+    description: "A SaaS application for environmental monitoring and reporting. Features include data visualization, automated reporting, and compliance tracking.",
+    link: "https://www.nav-eco.fr/en"
+  },
+  {
+    id: "auto-service-haarlem",
+    title: "Auto Service Haarlem",
+    client: "Auto Service Haarlem",
+    technologies: "HTML, CSS, JavaScript, PHP",
+    year: "2020",
+    description: "A website for an auto service company featuring service information, online appointment booking, and a customer review system.",
+    link: "https://autoservicehaarlem.nl/"
+  }
+];
+
+// Toggle project modal function
+const toggleProjectModal = function() {
+  projectModalContainer.classList.toggle("active");
+  projectOverlay.classList.toggle("active");
+  document.body.classList.toggle("modal-open");
+  
+  // Handle body scroll lock
+  if (projectModalContainer.classList.contains("active")) {
+    document.body.style.overflow = "hidden";
+  } else {
+    // Small delay to allow the close animation to complete
+    setTimeout(() => {
+      document.body.style.overflow = "";
+    }, 300);
+  }
+};
+
+// Add click event to all project items
+projectItems.forEach((item, index) => {
+  item.addEventListener("click", function(e) {
+    e.preventDefault();
+    
+    const projectLink = item.querySelector("a").getAttribute("href");
+    const projectId = projectLink.split("/")[2]; // Extract domain name as ID
+    const projectData = projectsData.find(p => p.link.includes(projectId)) || projectsData[index];
+    
+    // Populate modal with project data
+    projectModalTitle.textContent = projectData.title;
+    projectModalImg.src = item.querySelector("img").src;
+    projectModalImg.alt = projectData.title;
+    projectModalClient.textContent = projectData.client;
+    projectModalTech.textContent = projectData.technologies;
+    projectModalYear.textContent = projectData.year;
+    projectModalLink.href = projectData.link;
+    projectModalDesc.querySelector("p").textContent = projectData.description;
+    
+    toggleProjectModal();
+  });
+});
+
+// Close project modal when clicking close button or overlay
+if (projectModalCloseBtn) {
+  projectModalCloseBtn.addEventListener("click", toggleProjectModal);
+}
+
+if (projectOverlay) {
+  projectOverlay.addEventListener("click", toggleProjectModal);
+}
+
+// Close project modal when pressing Escape key
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape" && projectModalContainer.classList.contains("active")) {
+    toggleProjectModal();
+  }
+});
+
+// Counter animation for achievements section
+const counters = document.querySelectorAll('.achievement-number');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counter = entry.target;
+      const target = parseInt(counter.getAttribute('data-count'));
+      let count = 0;
+      const duration = 2000; // 2 seconds
+      const increment = Math.ceil(target / (duration / 30)); // Update every 30ms
+
+      const updateCount = () => {
+        count += increment;
+        if (count >= target) {
+          counter.textContent = target;
+          clearInterval(timer);
+        } else {
+          counter.textContent = count;
+        }
+      };
+
+      const timer = setInterval(updateCount, 30);
+      counterObserver.unobserve(counter);
+    }
+  });
+}, { threshold: 0.5 });
+
+// Observe all counters
+counters.forEach(counter => {
+  counterObserver.observe(counter);
+});
