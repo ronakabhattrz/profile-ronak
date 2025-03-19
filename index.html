@@ -39,26 +39,17 @@
       "@context": "http://www.schema.org",
       "@type": "person",
       "name": "Ronak Bhatt",
-      "jobTitle": "Musical artist, Playback Singer, software Engineer",
-      "height": "61.32",
-      "gender": "male",
-      "parents" : ["Ajay Bhatt", "Bhavna Bhatt"],
-      "siblings" : ["Shivam Bhatt", "Shivani Bhatt"],
-      "url": "https://music.ronakbhatt.in/",
+      "jobTitle": "Full Stack Developer",
+      "url": "https://ronakbhatt.in/",
       "sameAs": [
         "https://www.facebook.com/RonakbhattRz",
         "https://twitter.com/ronakabhattrz",
         "https://www.instagram.com/ronakbhattrz/",
         "https://www.youtube.com/channel/UC_jKbr7ACXE7LsuDoLaCJcw",
         "https://www.linkedin.com/in/ronakabhattrz/",
-        "https://music.ronakbhatt.in/",
-        "https://ronakbhatt.in/",
-        "https://www.imdb.com/name/nm14713258/"
+        "https://github.com/ronakabhattrz"
       ],
-      "colleague": [
-        "https://www.sal.edu.in/"
-      ],
-      "image": "https://i.scdn.co/image/ab6761610000e5ebeb0729c28a0f78c74e6f83ab",
+      "image": "https://ronakbhatt.in/assets/images/ronak.png",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Ahmedabad",
@@ -69,7 +60,34 @@
       "email": "ronakabhattrz@gmail.com",
       "birthDate": "1994-02-02",
       "birthPlace": "Ahmedabad",
-      "nationality": "India"
+      "nationality": "India",
+      "knowsAbout": [
+        "Ruby on Rails",
+        "React",
+        "TypeScript",
+        "Next.js",
+        "AWS",
+        "JavaScript",
+        "PostgreSQL",
+        "MySQL",
+        "Docker",
+        "Git"
+      ]
+    }
+  </script>
+
+  <!-- Additional Schema.org Markup for WebSite -->
+  <script type='application/ld+json'>
+    {
+      "@context": "http://www.schema.org",
+      "@type": "WebSite",
+      "name": "Ronak Bhatt Portfolio",
+      "url": "https://ronakbhatt.in/",
+      "description": "Personal portfolio website of Ronak Bhatt, Full Stack Developer",
+      "author": {
+        "@type": "Person",
+        "name": "Ronak Bhatt"
+      }
     }
   </script>
 
@@ -114,7 +132,7 @@
   <a href="#main" class="skip-link">Skip to main content</a>
   
   <!-- Loading indicator -->
-  <div class="loading-indicator">
+  <div class="loading-indicator" role="status" aria-label="Loading">
     <div class="spinner"></div>
   </div>
 
@@ -122,73 +140,73 @@
     - #MAIN
   -->
 
-  <main>
+  <main role="main" id="main">
 
     <!--
       - #SIDEBAR
     -->
 
-    <aside class="sidebar" data-sidebar>
+    <aside class="sidebar" data-sidebar role="complementary">
 
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/ronak.png" alt="Ronak Bhatt" width="80" loading="lazy">
+          <img src="./assets/images/ronak.png" alt="Ronak Bhatt - Full Stack Developer" width="80" loading="lazy">
         </figure>
 
         <div class="info-content">
           <h1 class="name" title="Ronak Bhatt">Ronak Bhatt</h1>
 
           <p class="title">Lead Web Developer</p>
-          <a href="https://www.ronakbhatt.in/assets/resume.pdf" target="_blank" title="resume" style="margin-top: 5px;color: #ffdc70;">Download Resume</a>
+          <a href="https://www.ronakbhatt.in/assets/resume.pdf" target="_blank" title="Download Ronak Bhatt's Resume" style="margin-top: 5px;color: #ffdc70;">Download Resume</a>
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
+        <button class="info_more-btn" data-sidebar-btn aria-expanded="false">
           <span>Show Contacts</span>
 
-          <ion-icon name="chevron-down"></ion-icon>
+          <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
         </button>
 
       </div>
 
-      <div class="sidebar-info_more">
+      <div class="sidebar-info_more" hidden>
 
         <div class="separator"></div>
 
-        <ul class="contacts-list">
+        <ul class="contacts-list" role="list">
 
-          <li class="contact-item">
+          <li class="contact-item" role="listitem">
 
             <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
             </div>
 
             <div class="contact-info">
               <p class="contact-title">Email</p>
 
-              <a href="mailto:ronakabhattrz@gmail.com" class="contact-link">ronakabhattrz@gmail.com</a>
+              <a href="mailto:ronakabhattrz@gmail.com" class="contact-link" aria-label="Email Ronak Bhatt">ronakabhattrz@gmail.com</a>
             </div>
 
           </li>
 
-          <li class="contact-item">
+          <li class="contact-item" role="listitem">
 
             <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
+              <ion-icon name="phone-portrait-outline" aria-hidden="true"></ion-icon>
             </div>
 
             <div class="contact-info">
               <p class="contact-title">Phone</p>
 
-              <a href="tel:+18179475211" class="contact-link">+1 (817) 947-5211</a>
+              <a href="tel:+18179475211" class="contact-link" aria-label="Call Ronak Bhatt">+1 (817) 947-5211</a>
             </div>
 
           </li>
 
-          <li class="contact-item">
+          <li class="contact-item" role="listitem">
 
             <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
+              <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
             </div>
 
             <div class="contact-info">
@@ -199,10 +217,10 @@
 
           </li>
 
-          <li class="contact-item">
+          <li class="contact-item" role="listitem">
 
             <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
+              <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
             </div>
 
             <div class="contact-info">
@@ -217,17 +235,17 @@
 
         <div class="separator"></div>
 
-        <ul class="social-list">
+        <ul class="social-list" role="list">
 
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/ronakabhattrz" class="social-link">
-              <ion-icon name="logo-linkedin"></ion-icon>
+          <li class="social-item" role="listitem">
+            <a href="https://www.linkedin.com/in/ronakabhattrz" class="social-link" aria-label="Visit Ronak Bhatt's LinkedIn Profile">
+              <ion-icon name="logo-linkedin" aria-hidden="true"></ion-icon>
             </a>
           </li>
 
-          <li class="social-item">
-            <a href="https://www.instagram.com/ronakbhattrz" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
+          <li class="social-item" role="listitem">
+            <a href="https://www.instagram.com/ronakbhattrz" class="social-link" aria-label="Visit Ronak Bhatt's Instagram Profile">
+              <ion-icon name="logo-instagram" aria-hidden="true"></ion-icon>
             </a>
           </li>
 
@@ -252,26 +270,26 @@
       -->
 
       <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link="about" aria-current="page">About</button>
+        <ul class="navbar-list" role="menubar">
+          <li class="navbar-item" role="none">
+            <button class="navbar-link active" data-nav-link="about" aria-current="page" role="menuitem">About</button>
           </li>
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link="resume">Resume</button>
+          <li class="navbar-item" role="none">
+            <button class="navbar-link" data-nav-link="resume" role="menuitem">Resume</button>
           </li>
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link="portfolio">Portfolio</button>
+          <li class="navbar-item" role="none">
+            <button class="navbar-link" data-nav-link="portfolio" role="menuitem">Portfolio</button>
           </li>
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link="blog">Blog</button>
+          <li class="navbar-item" role="none">
+            <button class="navbar-link" data-nav-link="blog" role="menuitem">Blog</button>
           </li>
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link="contact">Contact</button>
+          <li class="navbar-item" role="none">
+            <button class="navbar-link" data-nav-link="contact" role="menuitem">Contact</button>
           </li>
-          <li class="navbar-item">
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-              <ion-icon name="sunny" class="sun-icon"></ion-icon>
-              <ion-icon name="moon" class="moon-icon"></ion-icon>
+          <li class="navbar-item" role="none">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode theme">
+              <ion-icon name="sunny" class="sun-icon" aria-hidden="true"></ion-icon>
+              <ion-icon name="moon" class="moon-icon" aria-hidden="true"></ion-icon>
             </button>
           </li>
         </ul>
@@ -285,15 +303,15 @@
         - #ABOUT
       -->
 
-      <article class="about  active" data-page="about">
+      <article class="about active" data-page="about" role="article">
 
         <header>
           <h2 class="h2 article-title">About me</h2>
         </header>
 
-        <section class="about-text">
-          <p>
-             Hello! I am a highly experienced Ruby on Rails / JS full-stack developer with a strong focus on writing clean and efficient code. With over 10 years of experience, I bring a wealth of expertise to the table. If you are searching for an expert who perfectly matches my skill set, look no further. I am here to provide comprehensive solutions tailored to your specific workflow needs and help you integrate them with the latest technologies to boost your business productivity.
+        <section class="about-text" aria-labelledby="about-description">
+          <p id="about-description">
+            Hello! I am a highly experienced Ruby on Rails / JS full-stack developer with a strong focus on writing clean and efficient code. With over 10 years of experience, I bring a wealth of expertise to the table. If you are searching for an expert who perfectly matches my skill set, look no further. I am here to provide comprehensive solutions tailored to your specific workflow needs and help you integrate them with the latest technologies to boost your business productivity.
           </p>
 
           <p>
@@ -313,125 +331,80 @@
           - service
         -->
 
-        <section class="service">
+        <section class="service" aria-labelledby="services-title">
+          <h3 class="h3 service-title" id="services-title">What i'm doing</h3>
 
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
+          <ul class="service-list" role="list">
+            <li class="service-item" role="listitem">
               <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
+                <img src="./assets/images/icon-design.svg" alt="Web Design Icon" width="40">
               </div>
 
               <div class="service-content-box">
                 <h4 class="h4 service-item-title">Web design</h4>
-
                 <p class="service-item-text">
                   The most modern and high-quality design made at a professional level.
                 </p>
               </div>
-
             </li>
 
-            <li class="service-item">
-
+            <li class="service-item" role="listitem">
               <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+                <img src="./assets/images/icon-dev.svg" alt="Web Development Icon" width="40">
               </div>
 
               <div class="service-content-box">
                 <h4 class="h4 service-item-title">Web development</h4>
-
                 <p class="service-item-text">
                   High-quality development of sites at the professional level.
                 </p>
               </div>
-
             </li>
-
-            <!-- <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps</h4>
-
-                <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
-
-                <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
-                </p>
-              </div>
-
-            </li> -->
-
           </ul>
-
         </section>
 
         <!-- Testimonials Section -->
-        <section class="testimonials">
+        <section class="testimonials" aria-labelledby="testimonials-title">
+          <h3 class="h3 testimonials-title" id="testimonials-title">Testimonials</h3>
 
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-            <li class="testimonials-item">
+          <ul class="testimonials-list has-scrollbar" role="list">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
-
                 <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/pat.jpeg" alt="Pat Russell" width="60" style="border-radius: 20px;" data-testimonials-avatar>
+                  <img src="./assets/images/pat.jpeg" alt="Pat Russell - Client Testimonial" width="60" style="border-radius: 20px;" data-testimonials-avatar>
                 </figure>
 
                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Pat Russell</h4>
 
                 <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Ronak is an extremely skilled developer but what sets him apart are his communication skills. He takes the time to explore projects from the user perspective and understand purpose. After just a few weeks he was as capable as our lead developer who created the software.
-                  </p>
+                  <blockquote>
+                    <p>
+                      Ronak is an extremely skilled developer but what sets him apart are his communication skills. He takes the time to explore projects from the user perspective and understand purpose. After just a few weeks he was as capable as our lead developer who created the software.
+                    </p>
+                  </blockquote>
                 </div>
-
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
-
                 <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/aran.jpg" alt="Aran Jagers" width="60" style="border-radius: 20px;" data-testimonials-avatar>
+                  <img src="./assets/images/aran.jpg" alt="Aran Jagers - Client Testimonial" width="60" style="border-radius: 20px;" data-testimonials-avatar>
                 </figure>
 
                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Aran Jagers</h4>
 
                 <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    We are very delightful to work with Ronak . Always a fast response. Reliable in every way. 
-
-                  </p>
+                  <blockquote>
+                    <p>
+                      We are very delightful to work with Ronak. Always a fast response. Reliable in every way.
+                    </p>
+                  </blockquote>
                 </div>
-
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -449,7 +422,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -467,7 +440,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -485,7 +458,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -503,7 +476,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -521,7 +494,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -539,7 +512,7 @@
               </div>
             </li>
 
-            <li class="testimonials-item">
+            <li class="testimonials-item" role="listitem">
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
@@ -558,7 +531,6 @@
             </li>
 
           </ul>
-
         </section>
 
         <!-- Testimonials Modal -->
@@ -1258,82 +1230,61 @@
       <article class="portfolio" data-page="portfolio">
 
         <header>
-          <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title" id="portfolio-title">Portfolio</h2>
         </header>
 
         <section class="projects">
           <p style="color: white;">All Major Projects</p>
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
+          <ul class="filter-list" role="list">
+            <li class="filter-item" role="listitem">
+              <button class="active" data-filter-btn aria-pressed="true">All</button>
             </li>
-
-            <li class="filter-item">
+            <li class="filter-item" role="listitem">
               <button data-filter-btn>Web Development</button>
             </li>
-
-            <li class="filter-item">
+            <li class="filter-item" role="listitem">
               <button data-filter-btn>E-Commerce</button>
             </li>
-
-            <li class="filter-item">
+            <li class="filter-item" role="listitem">
               <button data-filter-btn>SaaS</button>
             </li>
-
           </ul>
 
           <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
+            <button class="filter-select" data-select aria-haspopup="true" aria-expanded="false">
               <div class="select-value" data-selecct-value>Select category</div>
-
               <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
+                <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
               </div>
-
             </button>
 
-            <ul class="select-list">
-
-              <li class="select-item">
+            <ul class="select-list" role="menu" hidden>
+              <li class="select-item" role="menuitem">
                 <button data-select-item>All</button>
               </li>
-
-              <li class="select-item">
+              <li class="select-item" role="menuitem">
                 <button data-select-item>Web Development</button>
               </li>
-
-              <li class="select-item">
+              <li class="select-item" role="menuitem">
                 <button data-select-item>E-Commerce</button>
               </li>
-
-              <li class="select-item">
+              <li class="select-item" role="menuitem">
                 <button data-select-item>SaaS</button>
               </li>
-
             </ul>
-
           </div>
 
-          <ul class="project-list">
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="https://hollandiapremium.nl/" target="_blank">
-
+          <ul class="project-list" role="list">
+            <li class="project-item active" data-filter-item data-category="web development" role="listitem">
+              <a href="https://hollandiapremium.nl/" target="_blank" rel="noopener noreferrer">
                 <figure class="project-img">
                   <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
                   </div>
-
-                  <img src="./assets/images/project-2.png" alt="Hollandia Premium" loading="lazy">
+                  <img src="./assets/images/project-2.png" alt="Hollandia Premium - Web Development Project" loading="lazy">
                 </figure>
-
                 <h3 class="project-title">Hollandia Premium</h3>
-
                 <p class="project-category">Web Development</p>
-
               </a>
             </li>
 
@@ -1825,44 +1776,50 @@
         - #CONTACT
       -->
 
-      <article class="contact" data-page="contact">
-
+      <article class="contact" data-page="contact" role="article">
         <header>
           <h2 class="h2 article-title">Contact</h2>
         </header>
 
-        <section class="mapbox" data-mapbox>
+        <section class="mapbox" data-mapbox aria-labelledby="map-title">
+          <h3 id="map-title" class="visually-hidden">Location Map</h3>
           <figure>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1293.2179044765537!2d72.60228228016206!3d23.002012688884378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1sen!2sin!4v1720529801638!5m2!1sen!2sin"
-              width="400" height="300" loading="lazy"></iframe>
+              width="400" height="300" loading="lazy" title="Ronak Bhatt's Location Map"></iframe>
           </figure>
         </section>
 
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
+        <section class="contact-form" aria-labelledby="contact-form-title">
+          <h3 class="h3 form-title" id="contact-form-title">Contact Form</h3>
 
           <form action="https://formspree.io/f/xldreqgl" method="POST" class="form" data-form>
-
             <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+              <div class="form-group">
+                <label for="fullname" class="visually-hidden">Full Name</label>
+                <input type="text" name="fullname" id="fullname" class="form-input" placeholder="Full name" required data-form-input>
+              </div>
 
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+              <div class="form-group">
+                <label for="email" class="visually-hidden">Email Address</label>
+                <input type="email" name="email" id="email" class="form-input" placeholder="Email address" required data-form-input>
+              </div>
             </div>
 
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+            <div class="form-group">
+              <label for="message" class="visually-hidden">Your Message</label>
+              <textarea name="message" id="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+            </div>
 
             <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
+              <ion-icon name="paper-plane" aria-hidden="true"></ion-icon>
               <span>Send Message</span>
             </button>
-
           </form>
 
-          <div class="form-success-message" style="display: none;">
+          <div class="form-success-message" style="display: none;" role="alert">
             <div class="success-content">
-              <ion-icon name="checkmark-circle-outline" style="font-size: 3rem; color: var(--vegas-gold);"></ion-icon>
+              <ion-icon name="checkmark-circle-outline" style="font-size: 3rem; color: var(--vegas-gold);" aria-hidden="true"></ion-icon>
               <h4 class="h4">Message Sent Successfully!</h4>
               <p>Thank you for contacting me. I'll get back to you as soon as possible.</p>
               <button class="form-btn send-new-btn" style="margin-top: 20px;">
@@ -1870,18 +1827,14 @@
               </button>
             </div>
           </div>
-
         </section>
-
       </article>
-
     </div>
-
   </main>
 
   <!-- Scroll to top button -->
   <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
-    <ion-icon name="arrow-up"></ion-icon>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
   </button>
 
   <!--
@@ -1895,6 +1848,19 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </body>
 
 </html>
