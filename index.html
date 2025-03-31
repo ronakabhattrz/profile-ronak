@@ -1687,7 +1687,14 @@
           </style>
 
           <script>
+            // Add a flag to track initialization
+            let blogInitialized = false;
+
             document.addEventListener('DOMContentLoaded', function() {
+              // Check if already initialized
+              if (blogInitialized) return;
+              blogInitialized = true;
+
               const mediumUsername = '@ronakabhattrz';
               const rssUrl = `https://medium.com/feed/${mediumUsername}`;
               const rssToJsonApi = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
@@ -1695,6 +1702,11 @@
               const postsContainer = document.getElementById('medium-posts-list');
               const loadingElement = document.getElementById('blog-loading');
               const errorElement = document.getElementById('blog-error');
+
+              // Clear any existing content
+              postsContainer.innerHTML = '';
+              loadingElement.style.display = 'flex';
+              errorElement.style.display = 'none';
 
               async function fetchMediumPosts() {
                 try {
@@ -1705,6 +1717,9 @@
                     loadingElement.style.display = 'none';
                     errorElement.style.display = 'none';
                     
+                    // Clear existing posts before adding new ones
+                    postsContainer.innerHTML = '';
+                    
                     data.items.forEach(post => {
                       const postElement = document.createElement('li');
                       postElement.className = 'medium-post';
@@ -1713,7 +1728,7 @@
                       const tempDiv = document.createElement('div');
                       tempDiv.innerHTML = post.content;
                       const firstImage = tempDiv.querySelector('img');
-                      const imageUrl = firstImage ? firstImage.src : nu;
+                      const imageUrl = firstImage ? firstImage.src : null;
                       
                       // Format date
                       const publishDate = new Date(post.pubDate);
