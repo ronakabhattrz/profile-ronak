@@ -1690,7 +1690,7 @@
             // Add a flag to track initialization
             let blogInitialized = false;
 
-            document.addEventListener('DOMContentLoaded', function() {
+            function initializeBlog() {
               // Check if already initialized
               if (blogInitialized) return;
               blogInitialized = true;
@@ -1702,6 +1702,12 @@
               const postsContainer = document.getElementById('medium-posts-list');
               const loadingElement = document.getElementById('blog-loading');
               const errorElement = document.getElementById('blog-error');
+
+              // Check if elements exist before proceeding
+              if (!postsContainer || !loadingElement || !errorElement) {
+                console.error('Required blog elements not found');
+                return;
+              }
 
               // Clear any existing content
               postsContainer.innerHTML = '';
@@ -1721,6 +1727,7 @@
                     postsContainer.innerHTML = '';
                     
                     data.items.forEach(post => {
+                      console.log(post);
                       const postElement = document.createElement('li');
                       postElement.className = 'medium-post';
                       
@@ -1776,7 +1783,14 @@
               }
 
               fetchMediumPosts();
-            });
+            }
+
+            // Initialize blog when DOM is fully loaded
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', initializeBlog);
+            } else {
+              initializeBlog();
+            }
           </script>
 
         </section>
