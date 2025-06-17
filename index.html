@@ -1497,135 +1497,156 @@
       -->
 
       <article class="blog" data-page="blog">
-
         <header>
           <h2 class="h2 article-title">Blog</h2>
         </header>
 
         <section class="blog-posts">
+          <!-- Loading State -->
+          <div id="blog-loading" class="blog-loading">
+            <div class="spinner"></div>
+            <p>Loading blog posts...</p>
+          </div>
 
+          <!-- Error State -->
+          <div id="blog-error" class="blog-error" style="display: none;">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <p>Failed to load blog posts. Please try again later.</p>
+          </div>
+
+          <!-- Posts Container -->
           <ul class="blog-posts-list" id="medium-posts-list">
-            <!-- Loading State -->
-            <div id="blog-loading" class="blog-loading">
-              <div class="spinner"></div>
-              <p>Loading blog posts...</p>
-            </div>
-
-            <!-- Error State -->
-            <div id="blog-error" class="blog-error" style="display: none;">
-              <ion-icon name="alert-circle-outline"></ion-icon>
-              <p>Failed to load blog posts. Please try again later.</p>
-            </div>
-
             <!-- Posts will be dynamically inserted here -->
           </ul>
 
           <script>
-            // Add a flag to track initialization
             let blogInitialized = false;
 
             function initializeBlog() {
-              // Check if already initialized
               if (blogInitialized) return;
               blogInitialized = true;
 
               const mediumUsername = 'ronakabhattrz';
-              const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`;
-              
               const postsContainer = document.getElementById('medium-posts-list');
               const loadingElement = document.getElementById('blog-loading');
               const errorElement = document.getElementById('blog-error');
 
-              if (!postsContainer || !loadingElement || !errorElement) {
-                console.error('Blog elements not found');
-                return;
-              }
-
-              // Clear any existing content
-              postsContainer.innerHTML = '';
+              // Show loading state
               loadingElement.style.display = 'flex';
               errorElement.style.display = 'none';
 
-              async function fetchMediumPosts() {
-                try {
-                  console.log('Fetching Medium posts from:', rssUrl);
-                  const response = await fetch(rssUrl);
-                  
-                  if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                  }
-                  
-                  const data = await response.json();
-                  console.log('Received data:', data);
-                  
-                  if (data.status === 'ok' && data.items && data.items.length > 0) {
+              // Fetch Medium RSS feed
+              fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`)
+                .then(response => response.json())
+                .then(data => {
+                  if (data.status === 'ok' && data.items) {
+                    // Clear loading state
                     loadingElement.style.display = 'none';
-                    errorElement.style.display = 'none';
                     
-                    data.items.forEach(post => {
-                      const postElement = document.createElement('li');
-                      postElement.className = 'medium-post';
-                      
-                      // Extract first image from content if available
-                      const tempDiv = document.createElement('div');
-                      tempDiv.innerHTML = post.content;
-                      const firstImage = tempDiv.querySelector('img');
-                      const imageUrl = firstImage ? firstImage.src : null;
-                      
-                      // Format date
-                      const publishDate = new Date(post.pubDate);
-                      const formattedDate = publishDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      });
-                      
-                      // Create excerpt from description (limit to 150 characters)
-                      const excerpt = post.description.replace(/<[^>]*>/g, '').slice(0, 150) + '...';
-                      
-                      postElement.innerHTML = `
-                        <a href="${post.link}" target="_blank" rel="noopener noreferrer">
-                          <figure class="blog-banner-box ${!imageUrl ? 'no-image' : ''}">
-                            ${imageUrl 
-                              ? `<img src="${imageUrl}" alt="${post.title}" loading="lazy">` 
-                              : '<ion-icon name="newspaper-outline"></ion-icon>'}
-                          </figure>
-                          <div class="blog-content">
-                            <div class="medium-post-meta">
-                              <ion-icon name="calendar-outline"></ion-icon>
-                              <time datetime="${post.pubDate}">${formattedDate}</time>
-                            </div>
-                            <h3 class="medium-post-title">${post.title}</h3>
-                            <p class="medium-post-excerpt">${excerpt}</p>
-                            <span class="medium-post-link">
-                              Read Article
-                              <ion-icon name="arrow-forward-outline"></ion-icon>
-                            </span>
-                          </div>
-                        </a>
-                      `;
-                      
-                      postsContainer.appendChild(postElement);
-                    });
-                  } else {
-                    throw new Error('No posts found or invalid data format');
-                  }
-                } catch (error) {
-                  console.error('Error fetching Medium posts:', error);
-                  loadingElement.style.display = 'none';
-                  errorElement.style.display = 'flex';
-                  errorElement.innerHTML = `
-                    <ion-icon name="alert-circle-outline"></ion-icon>
-                    <p>Failed to load blog posts. Please try again later.</p>
-                    <p style="font-size: 12px; color: var(--light-gray-70);">Error: ${error.message}</p>
-                  `;
-                }
-              }
+                    // Clear any existing content
+                    postsContainer.innerHTML = '';
 
-              fetchMediumPosts();
+                                         // Add posts
+                     data.items.forEach(post => {
+                       // Extract first image from content for thumbnail
+                       let thumbnail = post.thumbnail;
+                       if (!thumbnail) {
+                         const imgMatch = post.content.match(/<img[^>]+src="([^">]+)"/);
+                         thumbnail = imgMatch ? imgMatch[1] : './assets/images/medium.jpeg';
+                       }
+
+                       // Create post element
+                       const postElement = document.createElement('li');
+                       postElement.className = 'blog-post-item';
+                       
+                       // Format date
+                       const publishDate = new Date(post.pubDate);
+                       const formattedDate = publishDate.toLocaleDateString('en-US', {
+                         day: 'numeric',
+                         month: 'short',
+                         year: 'numeric'
+                       });
+
+                       // Extract clean description without HTML
+                       const cleanDescription = post.description ? 
+                         post.description.replace(/<[^>]*>/g, '').substring(0, 120) :
+                         post.content.replace(/<[^>]*>/g, '').substring(0, 120);
+
+                       // Get estimated reading time (lightweight calculation)
+                       const estimatedReadTime = Math.max(2, Math.ceil(post.title.length / 50));
+
+                       postElement.innerHTML = `
+                         <article class="blog-card">
+                           <div class="blog-card-banner">
+                             <img src="${thumbnail}" alt="${post.title}" loading="lazy" class="blog-banner-img">
+                             <div class="blog-card-tag">
+                               <ion-icon name="logo-medium"></ion-icon>
+                             </div>
+                           </div>
+
+                           <div class="blog-card-content">
+                             <div class="blog-card-meta">
+                               <time datetime="${post.pubDate}" class="blog-date">${formattedDate}</time>
+                               <span class="blog-reading-time">${estimatedReadTime} min read</span>
+                             </div>
+
+                             <h3 class="blog-card-title">
+                               <a href="${post.link}" target="_blank" class="blog-title-link">${post.title}</a>
+                             </h3>
+                             
+                             <p class="blog-card-text">${cleanDescription}...</p>
+
+                             <div class="blog-card-footer">
+                               <div class="blog-author">
+                                 <img src="${data.feed.image || './assets/images/ronak.png'}" alt="${data.feed.author}" class="blog-author-avatar">
+                                 <span class="blog-author-name">${data.feed.author}</span>
+                               </div>
+                               <a href="${post.link}" target="_blank" class="blog-read-btn">
+                                 <span>Read</span>
+                                 <ion-icon name="arrow-forward-outline"></ion-icon>
+                               </a>
+                             </div>
+                           </div>
+                         </article>
+                       `;
+
+                       postsContainer.appendChild(postElement);
+                     });
+
+                    // Add fade-in animation to posts
+                    const posts = document.querySelectorAll('.blog-post-item');
+                    posts.forEach((post, index) => {
+                      setTimeout(() => {
+                        post.classList.add('fade-in');
+                      }, index * 200);
+                    });
+
+                  } else {
+                    showError();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error fetching Medium posts:', error);
+                  showError();
+                });
+
+              function showError() {
+                loadingElement.style.display = 'none';
+                errorElement.style.display = 'flex';
+                errorElement.innerHTML = `
+                  <div class="error-content">
+                    <ion-icon name="alert-circle-outline"></ion-icon>
+                    <p>Unable to load blog posts. You can view all articles on Medium.</p>
+                    <a href="https://medium.com/@${mediumUsername}" target="_blank" class="medium-profile-link">
+                      <ion-icon name="logo-medium"></ion-icon>
+                      View on Medium
+                    </a>
+                  </div>
+                `;
+              }
             }
 
-            // Initialize blog when the blog section is loaded
+            // Initialize blog when the blog section becomes visible
             const blogSection = document.querySelector('[data-page="blog"]');
             if (blogSection) {
               const observer = new IntersectionObserver((entries) => {
@@ -1641,8 +1662,357 @@
             }
           </script>
 
-        </section>
+          <style>
+            /* Blog Posts Container */
+            .blog-posts-list {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+              gap: 25px;
+              margin-top: 30px;
+              padding: 0;
+            }
 
+            /* Blog Post Item Animation */
+            .blog-post-item {
+              opacity: 0;
+              transform: translateY(30px);
+              transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .blog-post-item.fade-in {
+              opacity: 1;
+              transform: translateY(0);
+            }
+
+            /* Blog Card */
+            .blog-card {
+              background: var(--border-gradient-onyx);
+              border-radius: 20px;
+              overflow: hidden;
+              transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+              position: relative;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+            }
+
+            .blog-card:hover {
+              transform: translateY(-8px);
+              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            .blog-card::before {
+              content: "";
+              position: absolute;
+              inset: 1px;
+              background: var(--eerie-black-1);
+              border-radius: inherit;
+              z-index: -1;
+            }
+
+            /* Blog Card Banner */
+            .blog-card-banner {
+              position: relative;
+              aspect-ratio: 16/10;
+              overflow: hidden;
+              background: linear-gradient(135deg, var(--smoky-black) 0%, var(--onyx) 100%);
+            }
+
+            .blog-banner-img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .blog-card:hover .blog-banner-img {
+              transform: scale(1.05);
+            }
+
+            .blog-card-tag {
+              position: absolute;
+              top: 15px;
+              right: 15px;
+              background: rgba(0, 0, 0, 0.8);
+              backdrop-filter: blur(10px);
+              color: var(--vegas-gold);
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 18px;
+              transition: all 0.3s ease;
+            }
+
+            .blog-card:hover .blog-card-tag {
+              background: var(--vegas-gold);
+              color: var(--eerie-black-1);
+              transform: rotate(360deg);
+            }
+
+            /* Blog Card Content */
+            .blog-card-content {
+              padding: 25px;
+              flex-grow: 1;
+              display: flex;
+              flex-direction: column;
+            }
+
+            .blog-card-meta {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 15px;
+              font-size: var(--fs-7);
+            }
+
+            .blog-date {
+              color: var(--vegas-gold);
+              font-weight: var(--fw-500);
+              background: rgba(255, 220, 112, 0.1);
+              padding: 4px 12px;
+              border-radius: 20px;
+              border: 1px solid rgba(255, 220, 112, 0.2);
+            }
+
+            .blog-reading-time {
+              color: var(--light-gray-70);
+              display: flex;
+              align-items: center;
+              gap: 5px;
+            }
+
+            .blog-reading-time::before {
+              content: "⏱";
+              font-size: 14px;
+            }
+
+            /* Blog Card Title */
+            .blog-card-title {
+              margin-bottom: 15px;
+              line-height: 1.4;
+            }
+
+            .blog-title-link {
+              color: var(--white-2);
+              font-size: var(--fs-5);
+              font-weight: var(--fw-500);
+              text-decoration: none;
+              transition: color 0.3s ease;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+
+            .blog-title-link:hover {
+              color: var(--vegas-gold);
+            }
+
+            /* Blog Card Text */
+            .blog-card-text {
+              color: var(--light-gray);
+              font-size: var(--fs-6);
+              line-height: 1.6;
+              margin-bottom: 20px;
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              flex-grow: 1;
+            }
+
+            /* Blog Card Footer */
+            .blog-card-footer {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding-top: 20px;
+              border-top: 1px solid var(--jet);
+            }
+
+            .blog-author {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+            }
+
+            .blog-author-avatar {
+              width: 35px;
+              height: 35px;
+              border-radius: 50%;
+              object-fit: cover;
+              border: 2px solid var(--vegas-gold);
+            }
+
+            .blog-author-name {
+              color: var(--light-gray);
+              font-size: var(--fs-6);
+              font-weight: var(--fw-500);
+            }
+
+            /* Blog Read Button */
+            .blog-read-btn {
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              padding: 8px 16px;
+              background: linear-gradient(135deg, var(--vegas-gold), var(--orange-yellow-crayola));
+              color: var(--eerie-black-1);
+              border-radius: 25px;
+              font-size: var(--fs-6);
+              font-weight: var(--fw-500);
+              text-decoration: none;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              position: relative;
+              overflow: hidden;
+            }
+
+            .blog-read-btn::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+              transition: left 0.5s;
+            }
+
+            .blog-read-btn:hover::before {
+              left: 100%;
+            }
+
+            .blog-read-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(255, 220, 112, 0.4);
+            }
+
+            .blog-read-btn ion-icon {
+              font-size: 16px;
+              transition: transform 0.3s ease;
+            }
+
+            .blog-read-btn:hover ion-icon {
+              transform: translateX(3px);
+            }
+
+            /* Loading and Error States */
+            .blog-loading,
+            .blog-error {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 60px 20px;
+              text-align: center;
+            }
+
+            .spinner {
+              width: 50px;
+              height: 50px;
+              border: 4px solid var(--border-gradient-onyx);
+              border-top-color: var(--vegas-gold);
+              border-radius: 50%;
+              animation: spin 1s linear infinite;
+              margin-bottom: 20px;
+            }
+
+            .blog-loading p {
+              color: var(--light-gray);
+              font-size: var(--fs-5);
+              margin-top: 15px;
+            }
+
+            .error-content {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 20px;
+            }
+
+            .error-content ion-icon {
+              font-size: 60px;
+              color: var(--bittersweet-shimmer);
+            }
+
+            .error-content p {
+              color: var(--light-gray);
+              font-size: var(--fs-5);
+              max-width: 400px;
+            }
+
+            .medium-profile-link {
+              display: inline-flex;
+              align-items: center;
+              gap: 10px;
+              padding: 12px 24px;
+              background: var(--border-gradient-onyx);
+              color: var(--vegas-gold);
+              border-radius: 30px;
+              font-size: var(--fs-6);
+              font-weight: var(--fw-500);
+              text-decoration: none;
+              transition: all 0.3s ease;
+              border: 1px solid var(--vegas-gold);
+            }
+
+            .medium-profile-link:hover {
+              background: var(--vegas-gold);
+              color: var(--eerie-black-1);
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(255, 220, 112, 0.3);
+            }
+
+            @keyframes spin {
+              to { transform: rotate(360deg); }
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+              .blog-posts-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+              }
+
+              .blog-card-content {
+                padding: 20px;
+              }
+
+              .blog-card-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+              }
+
+              .blog-read-btn {
+                align-self: flex-end;
+              }
+            }
+
+            @media (max-width: 480px) {
+              .blog-posts-list {
+                margin-top: 20px;
+              }
+
+              .blog-card-banner {
+                aspect-ratio: 16/9;
+              }
+
+              .blog-card-content {
+                padding: 15px;
+              }
+
+              .blog-card-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+              }
+            }
+          </style>
+        </section>
       </article>
 
 
