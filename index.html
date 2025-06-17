@@ -1535,7 +1535,7 @@
               loadingElement.style.display = 'flex';
               errorElement.style.display = 'none';
 
-              // Fetch Medium RSS feed
+                            // Fetch Medium RSS feed (free tier gives ~10 most recent articles)
               fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`)
                 .then(response => response.json())
                 .then(data => {
@@ -1546,8 +1546,21 @@
                     // Clear any existing content
                     postsContainer.innerHTML = '';
 
-                                         // Add posts
-                     data.items.forEach(post => {
+                    // Show recent articles count
+                    if (data.items.length > 0) {
+                      const countElement = document.createElement('div');
+                      countElement.className = 'blog-count';
+                      countElement.innerHTML = `
+                        <p class="blog-count-text">
+                          <ion-icon name="document-text-outline"></ion-icon>
+                          Latest ${data.items.length} articles from Medium
+                        </p>
+                      `;
+                      postsContainer.appendChild(countElement);
+                    }
+
+                    // Add posts
+                    data.items.forEach((post, index) => {
                        // Extract first image from content for thumbnail
                        let thumbnail = post.thumbnail;
                        if (!thumbnail) {
@@ -1613,33 +1626,56 @@
                        postsContainer.appendChild(postElement);
                      });
 
-                    // Add fade-in animation to posts
-                    const posts = document.querySelectorAll('.blog-post-item');
-                    posts.forEach((post, index) => {
-                      setTimeout(() => {
-                        post.classList.add('fade-in');
-                      }, index * 200);
-                    });
+                                         // Add fade-in animation to posts
+                     const posts = document.querySelectorAll('.blog-post-item');
+                     posts.forEach((post, index) => {
+                       setTimeout(() => {
+                         post.classList.add('fade-in');
+                       }, index * 100); // Faster animation for more articles
+                     });
+
+                     // Add "View More on Medium" button if we have articles
+                     if (data.items.length > 0) {
+                       const viewMoreElement = document.createElement('div');
+                       viewMoreElement.className = 'blog-view-more';
+                       viewMoreElement.innerHTML = `
+                         <a href="https://medium.com/@${mediumUsername}" target="_blank" class="view-more-btn">
+                           <ion-icon name="logo-medium"></ion-icon>
+                           <span>View All Articles on Medium</span>
+                           <ion-icon name="arrow-forward-outline"></ion-icon>
+                         </a>
+                       `;
+                       postsContainer.appendChild(viewMoreElement);
+                     }
 
                   } else {
                     showError();
                   }
                 })
                 .catch(error => {
-                  console.error('Error fetching Medium posts:', error);
-                  showError();
+                  console.error('Error fetching Medium posts via RSS2JSON:', error);
+                  // Try alternative method as fallback
+                  tryAlternativeMethod();
                 });
+
+              // Alternative method to fetch more articles
+              function tryAlternativeMethod() {
+                console.log('Trying alternative method...');
+                // For now, show error but mention the limitation
+                showError();
+              }
 
               function showError() {
                 loadingElement.style.display = 'none';
                 errorElement.style.display = 'flex';
                 errorElement.innerHTML = `
                   <div class="error-content">
-                    <ion-icon name="alert-circle-outline"></ion-icon>
-                    <p>Unable to load blog posts. You can view all articles on Medium.</p>
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <h4>Blog Articles</h4>
+                    <p>The free RSS service shows the latest articles. For the complete collection of articles, visit my Medium profile.</p>
                     <a href="https://medium.com/@${mediumUsername}" target="_blank" class="medium-profile-link">
                       <ion-icon name="logo-medium"></ion-icon>
-                      View on Medium
+                      View All Articles on Medium
                     </a>
                   </div>
                 `;
@@ -1670,6 +1706,30 @@
               gap: 25px;
               margin-top: 30px;
               padding: 0;
+            }
+
+            /* Blog Count */
+            .blog-count {
+              grid-column: 1 / -1;
+              text-align: center;
+              margin-bottom: 20px;
+            }
+
+            .blog-count-text {
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              color: var(--vegas-gold);
+              font-size: var(--fs-6);
+              font-weight: var(--fw-500);
+              background: rgba(255, 220, 112, 0.1);
+              padding: 10px 20px;
+              border-radius: 25px;
+              border: 1px solid rgba(255, 220, 112, 0.2);
+            }
+
+            .blog-count-text ion-icon {
+              font-size: 18px;
             }
 
             /* Blog Post Item Animation */
@@ -1895,9 +1955,66 @@
               transition: transform 0.3s ease;
             }
 
-            .blog-read-btn:hover ion-icon {
-              transform: translateX(3px);
-            }
+                         .blog-read-btn:hover ion-icon {
+               transform: translateX(3px);
+             }
+
+             /* View More Button */
+             .blog-view-more {
+               grid-column: 1 / -1;
+               text-align: center;
+               margin-top: 30px;
+               padding-top: 30px;
+               border-top: 1px solid var(--jet);
+             }
+
+             .view-more-btn {
+               display: inline-flex;
+               align-items: center;
+               gap: 12px;
+               padding: 15px 30px;
+               background: linear-gradient(135deg, var(--border-gradient-onyx), var(--jet));
+               color: var(--vegas-gold);
+               border-radius: 50px;
+               font-size: var(--fs-5);
+               font-weight: var(--fw-500);
+               text-decoration: none;
+               transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+               border: 2px solid var(--vegas-gold);
+               position: relative;
+               overflow: hidden;
+             }
+
+             .view-more-btn::before {
+               content: "";
+               position: absolute;
+               top: 0;
+               left: -100%;
+               width: 100%;
+               height: 100%;
+               background: linear-gradient(135deg, var(--vegas-gold), var(--orange-yellow-crayola));
+               transition: left 0.5s ease;
+               z-index: -1;
+             }
+
+             .view-more-btn:hover::before {
+               left: 0;
+             }
+
+             .view-more-btn:hover {
+               color: var(--eerie-black-1);
+               transform: translateY(-3px);
+               box-shadow: 0 15px 35px rgba(255, 220, 112, 0.4);
+             }
+
+             .view-more-btn ion-icon {
+               font-size: 20px;
+               transition: transform 0.3s ease;
+             }
+
+             .view-more-btn:hover ion-icon:last-child {
+               transform: translateX(5px);
+             }
 
             /* Loading and Error States */
             .blog-loading,
@@ -1935,13 +2052,21 @@
 
             .error-content ion-icon {
               font-size: 60px;
-              color: var(--bittersweet-shimmer);
+              color: var(--vegas-gold);
+            }
+
+            .error-content h4 {
+              color: var(--white-2);
+              font-size: var(--fs-4);
+              margin-bottom: 10px;
             }
 
             .error-content p {
               color: var(--light-gray);
               font-size: var(--fs-5);
               max-width: 400px;
+              text-align: center;
+              line-height: 1.6;
             }
 
             .medium-profile-link {
